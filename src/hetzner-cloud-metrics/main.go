@@ -15,20 +15,19 @@ func usageHeader() {
 
 func usage() {
 	usageHeader()
-	fmt.Printf(helpText)
+	fmt.Printf(helpText, name, defaultStep)
 }
 
 func main() {
 	var tokenFile = flag.String("token-file", "", "File containing the API access token")
 	var help = flag.Bool("help", false, "Show help")
 	var version = flag.Bool("version", false, "Show version")
-	var step = flag.Int64("step", 60, "step size")
+	var step = flag.Int64("step", defaultStep, "step size")
 	var cpu = flag.Bool("cpu", false, "Query CPU")
 	var disk = flag.Bool("disk", false, "Query disk")
 	var network = flag.Bool("network", false, "Quer network")
 	var parsedServers HetznerAllServer
 	var useProxy string
-	var metrics []string
 
 	flag.Usage = usage
 	flag.Parse()
@@ -65,16 +64,6 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error: No metric data selected\n\n")
 		usage()
 		os.Exit(1)
-	}
-
-	if *cpu {
-		metrics = append(metrics, hetznerMetricsTypeCPU)
-	}
-	if *disk {
-		metrics = append(metrics, hetznerMetricsTypeDisk)
-	}
-	if *network {
-		metrics = append(metrics, hetznerMetricsTypeNetwork)
 	}
 
 	environment := getEnvironment()

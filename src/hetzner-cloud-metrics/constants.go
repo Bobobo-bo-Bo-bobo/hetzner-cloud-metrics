@@ -1,7 +1,7 @@
 package main
 
 const name = "hetzner-cloud-metrics"
-const version = "1.0.0-20201104"
+const version = "1.0.0"
 const userAgent = name + "/" + version + " (https://git.ypbind.de/cgit/hetzner-cloud-status/)"
 
 const versionText = `%s version %s
@@ -14,7 +14,24 @@ Public License Version 3. (http://www.gnu.org/copyleft/gpl.html)
 Build with go version: %s
 `
 
-const helpText = ``
+const helpText = `
+Usage: %s [--help] --token-file <file> --cpu --disk --network --step <step> [<server> <server> ...]
+	--cpu				Show CPU data
+	
+	--disk				Show disk data
+
+	--help				This text
+
+	--network			Show network data
+
+	--step <step>		Data range in seconds.
+						Default: %d
+
+	--token-file <file>	Token file
+
+`
+
+const defaultStep = 60
 
 const hetznerAllServersURL = "https://api.hetzner.cloud/v1/servers?sort=name"
 const hetznerMetricsURLFmtString = "https://api.hetzner.cloud/v1/servers/%d/metrics"
